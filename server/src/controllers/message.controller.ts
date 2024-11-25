@@ -20,7 +20,7 @@ export const sendMessage = async (req: Request, res: Response) => {
 export const getMessages = async (req: Request, res: Response) => {
   try {
     const { userId } = req.query;
-    if(!userId) return res.status(400).json({ error: 'User ID param is required' })
+    if(!userId) res.status(400).json({ error: 'User ID param is required' })
     // console.log('User ID:', userId)
     // console.log('Authenticated User ID:', (req as any).user?.userId)
 
