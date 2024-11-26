@@ -46,14 +46,14 @@ export const getRecentChats = async (req: Request, res: Response) => {
     if (!userId) {
       return res.status(401).json({ error: "Unauthorized" });
     }
-    console.log("User ID:", userId);
+    // console.log("User ID:", userId);
 
     // Step 1: Fetch all messages involving the current user
     const messages = await Message.find({
       $or: [{ sender: userId }, { receiver: userId }],
     }).sort({ timestamp: -1 }); // Sort by latest first
 
-    console.log("Messages fetched:", messages);
+    // console.log("Messages fetched:", messages);
 
     // Step 2: Process messages to extract unique users and latest timestamps
     const chatMap: Record<string, { lastMessageTime: Date }> = {};
@@ -70,7 +70,7 @@ export const getRecentChats = async (req: Request, res: Response) => {
       }
     });
 
-    console.log("Chat Map:", chatMap);
+    // console.log("Chat Map:", chatMap);
 
     // Step 3: Fetch user details for unique users
     const userIds = Object.keys(chatMap);
@@ -78,7 +78,7 @@ export const getRecentChats = async (req: Request, res: Response) => {
       "username isOnline"
     );
 
-    console.log("Users fetched:", users);
+    // console.log("Users fetched:", users);
 
     // Step 4: Combine user details with message information
     const formattedChats = users.map((user) => ({

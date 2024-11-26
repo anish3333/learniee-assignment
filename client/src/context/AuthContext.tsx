@@ -43,10 +43,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         }
       );
 
-      // if (response.status === 200) {
+      if (response.status === 200) {
         setUser(response.data.user);
         setIsAuthenticated(true);
-      // }
+      }
     } catch (error) {
       console.error("Signup failed:", error);
       throw error; // Rethrow the error for the calling function to handle.
