@@ -5,6 +5,6 @@ import { sendMessage, getMessages } from '../controllers/message.controller';
 const router = Router();
 
 router.post('/', auth, sendMessage);
-router.get('/', auth, getMessages);
+router.get('/:userid', auth, getMessages);
 
 export default router;
