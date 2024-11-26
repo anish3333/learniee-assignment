@@ -13,7 +13,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const login = async (email: string, password: string) => {
     const response = await axios.post(
-      "http://localhost:5000/api/auth/login",
+      `${import.meta.env.VITE_SERVER_URL}/api/auth/login`,
       { email, password },
       {
         headers: {
@@ -33,7 +33,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     setLoading(true);
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/auth/register",
+        `${import.meta.env.VITE_SERVER_URL}/api/auth/register`,
         { username, email, password },
         {
           headers: {
@@ -57,7 +57,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const logout = async () => {
     setLoading(true);
-    const response = await axios.get("http://localhost:5000/api/auth/logout", {
+    const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/api/auth/logout`, {
       withCredentials: true,
     });
 
@@ -70,7 +70,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const verify = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/auth/isauth",
+        `${import.meta.env.VITE_SERVER_URL}/api/auth/isauth`,
         {
           withCredentials: true,
         }
