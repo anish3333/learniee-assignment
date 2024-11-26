@@ -2,6 +2,7 @@ import React from 'react';
 import { useAuth } from '../context/AuthContext';
 import { LogOut, User } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import ChatPage from './ChatPage';
 
 export const Home: React.FC = () => {
   const { user, logout } = useAuth();
@@ -37,7 +38,7 @@ export const Home: React.FC = () => {
         </div>
       </nav>
 
-      <main className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+      {/* <main className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
         <div className="bg-white rounded-2xl shadow-xl p-8">
           <div className="max-w-3xl mx-auto text-center">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">Welcome to Your Dashboard</h2>
@@ -45,13 +46,12 @@ export const Home: React.FC = () => {
               You're logged in as <span className="font-semibold">{user?.email}</span>
             </p>
             <div className="mt-8 p-6 bg-indigo-50 rounded-xl">
-              <p className="text-indigo-700">
-                This is a protected route. You can only see this page if you're authenticated.
-              </p>
+                
             </div>
           </div>
         </div>
-      </main>
+      </main> */}
+      <ChatPage />
     </div>
   );
 };

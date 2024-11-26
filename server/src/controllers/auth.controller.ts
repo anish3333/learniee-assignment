@@ -149,3 +149,18 @@ export const isAuthenticated = async (req: Request, res: Response) => {
     });
   }
 };
+
+
+export const searchUser = async (req: Request, res: Response) => {
+  try {
+    const { username } = req.query;
+    console.log(username)
+    const user = await User.findOne({ username });
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    res.json({ user });
+  } catch (error) {
+    res.status(400).json({ error: 'Error searching user' });
+  }
+};

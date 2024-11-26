@@ -7,7 +7,12 @@ const messageSchema = new mongoose.Schema({
   content: { type: String, required: true },
   timestamp: { type: Date, default: Date.now },
   isRead: { type: Boolean, default: false },
-  type: { type: String, enum: ['text', 'image'], default: 'text' }
+  type: { type: String, enum: ['text', 'image'], default: 'text' },
+  status: { 
+    type: String, 
+    enum: ['sent', 'delivered', 'read'], 
+    default: 'sent' 
+  }
 }, { timestamps: true });
 
 export const Message = mongoose.model<IMessage>('Message', messageSchema);
