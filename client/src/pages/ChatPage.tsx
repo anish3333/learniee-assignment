@@ -53,7 +53,9 @@ const ChatPage = () => {
   const fetchRecentChats = async () => {
     try {
       const res = await fetch(
-        `${import.meta.env.VITE_SERVER_URL}/api/messages/recent-chats`,
+        `${import.meta.env.VITE_PROXY_URL}/proxy?url=${encodeURIComponent(
+          `${import.meta.env.VITE_SERVER_URL}/api/messages/recent-chats`
+        )}`,
         {
           credentials: "include",
         }
@@ -83,7 +85,11 @@ const ChatPage = () => {
 
     try {
       const res = await fetch(
-        `${import.meta.env.VITE_SERVER_URL}/api/auth/search?username=${searchUsername}`,
+        `${import.meta.env.VITE_PROXY_URL}/proxy?url=${encodeURIComponent(
+          `${
+            import.meta.env.VITE_SERVER_URL
+          }/api/auth/search?username=${searchUsername}`
+        )}`,
         { credentials: "include" }
       );
       const data = await res.json();
@@ -91,7 +97,9 @@ const ChatPage = () => {
       console.log(data.user);
       if (data.user._id) {
         const historyRes = await fetch(
-          `${import.meta.env.VITE_SERVER_URL}/api/messages/m/${data.user._id}`,
+          `${import.meta.env.VITE_PROXY_URL}/proxy?url=${encodeURIComponent(
+            `${import.meta.env.VITE_SERVER_URL}/api/messages/m/${data.user._id}`
+          )}`,
           { credentials: "include" }
         );
         const messages = await historyRes.json();
@@ -135,12 +143,18 @@ const ChatPage = () => {
       setMessages((prev) => [...prev, optimisticMessage]);
       setInputMessage("");
 
-      const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/messages`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(messageData),
-        credentials: "include",
-      });
+      const res = await fetch(
+        `${import.meta.env.VITE_PROXY_URL}/proxy?url=${encodeURIComponent(
+          `${import.meta.env.VITE_SERVER_URL}/api/messages`
+        )}`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(messageData),
+          credentials: "include",
+        }
+      );
+      
       const savedMessage = await res.json();
 
       socket?.emit("send_message", savedMessage);
@@ -160,7 +174,9 @@ const ChatPage = () => {
     console.log(user);
     if (user._id) {
       const historyRes = await fetch(
-        `${import.meta.env.VITE_SERVER_URL}/api/messages/m/${user._id}`,
+        `${import.meta.env.VITE_PROXY_URL}/proxy?url=${encodeURIComponent(
+          `${import.meta.env.VITE_SERVER_URL}/api/messages/m/${user._id}`
+        )}`,
         { credentials: "include" }
       );
       const messages = await historyRes.json();
@@ -170,20 +186,20 @@ const ChatPage = () => {
     }
   };
 
-
   useEffect(() => {
     if (!socket || !receiver) {
+      console.log(socket, receiver)
       console.log("socket or receiver not found");
       return;
     }
-  
+
     socket.on("receive_message", (message: Message) => {
       setMessages((prev) => {
         const messageExists = prev.some((msg) => msg._id === message._id);
         return messageExists ? prev : [...prev, message];
       });
     });
-  
+
     socket.on("user_typing", ({ userId }: { userId: string }) => {
       if (userId === receiver?._id) {
         setIsTyping(true);
@@ -192,32 +208,35 @@ const ChatPage = () => {
         }, 2000);
       }
     });
-  
-    const handleUserStatusChange = ({ userId, isOnline }: { userId: string; isOnline: boolean }) => {
+
+    const handleUserStatusChange = ({
+      userId,
+      isOnline,
+    }: {
+      userId: string;
+      isOnline: boolean;
+    }) => {
       console.log("User status change event received:", userId, isOnline);
-      
+
       if (receiver && userId === receiver._id) {
         setReceiver((prev) => (prev ? { ...prev, isOnline } : null));
       }
-      
+
       setRecentChats((prevChats) =>
         prevChats.map((chat) =>
           chat._id === userId ? { ...chat, isOnline } : chat
         )
       );
     };
-  
+
     socket.on("user_status_change", handleUserStatusChange);
-  
-  
-  
+
     return () => {
       socket.off("receive_message");
       socket.off("user_typing");
       socket.off("user_status_change", handleUserStatusChange);
     };
   }, [socket, receiver, currentUser]);
-  
 
   return (
     <div className="h-[calc(100vh-64px)] flex flex-col md:flex-row bg-gray-50 border-t-2">

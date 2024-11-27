@@ -9,7 +9,6 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   useEffect(() => {
     const socketInstance = io(`${import.meta.env.VITE_SERVER_URL}`);
     setSocket(socketInstance);
-
     return () => {
       socketInstance.disconnect();
     };
