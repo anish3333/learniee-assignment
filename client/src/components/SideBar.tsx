@@ -66,7 +66,7 @@ export const Sidebar = ({
             </p>
           </div>
           {receiver?._id === chat._id && (
-            <div className="w-2 h-2 bg-blue-500 rounded-full ml-auto"></div>
+            <div className="w-2 h-2 bg-indigo-600 rounded-full ml-auto"></div>
           )}
         </div>
       ))}
@@ -100,11 +100,11 @@ export const Sidebar = ({
               onChange={(e) => setSearchUsername(e.target.value)}
               onKeyPress={(e) => e.key === "Enter" && searchUser()}
               placeholder="Search users..."
-              className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+              className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-600 focus:ring-1 focus:ring-indigo-600"
             />
             <button
               onClick={searchUser}
-              className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none"
+              className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-blue-600 focus:outline-none"
             >
               Search
             </button>
@@ -193,11 +193,11 @@ export const Sidebar = ({
               onChange={(e) => setSearchUsername(e.target.value)}
               onKeyPress={(e) => e.key === "Enter" && searchUser()}
               placeholder="Search users..."
-              className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+              className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-600 focus:ring-1 focus:ring-indigo-600"
             />
             <button
               onClick={searchUser}
-              className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none"
+              className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-blue-600 focus:outline-none"
             >
               Search
             </button>

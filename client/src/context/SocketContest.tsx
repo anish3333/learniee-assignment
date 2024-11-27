@@ -7,7 +7,9 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   const [socket, setSocket] = useState<Socket | null>(null);
 
   useEffect(() => {
-    const socketInstance = io(`${import.meta.env.VITE_SERVER_URL}`);
+    const socketInstance = io(`${import.meta.env.VITE_SERVER_URL}`, {
+      withCredentials: true, // Allow cookies for authentication if needed
+    });
     setSocket(socketInstance);
     return () => {
       socketInstance.disconnect();

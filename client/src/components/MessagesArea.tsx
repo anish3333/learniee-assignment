@@ -1,6 +1,6 @@
 export const MessagesArea = ({ messages, currentUser, receiver, isTyping, chatContainerRef } : any) => {
   return (
-    <div ref={chatContainerRef} className="flex-1 overflow-y-auto p-6 space-y-4">
+    <div ref={chatContainerRef} className="flex-1 overflow-y-auto p-6 space-y-4 mb-4">
       {messages.map((msg : any, idx : number) => (
 
         <div
@@ -12,7 +12,7 @@ export const MessagesArea = ({ messages, currentUser, receiver, isTyping, chatCo
           <div
             className={`max-w-[70%] p-3 rounded-lg ${
               msg.sender === currentUser?._id
-                ? "bg-blue-500 text-white rounded-br-none"
+                ? "bg-indigo-600 text-white rounded-br-none"
                 : "bg-gray-100 rounded-bl-none"
             }`}
           >
@@ -28,7 +28,7 @@ export const MessagesArea = ({ messages, currentUser, receiver, isTyping, chatCo
         </div>
       ))}
       {isTyping && (
-        <div className="text-gray-500 text-sm italic">{receiver.username} is typing...</div>
+        <div className="text-gray-500 text-md italic mb-3"><span className="text-indigo-600">{receiver.username} </span>is typing...</div>
       )}
     </div>
   );

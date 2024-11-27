@@ -2,7 +2,7 @@ export const WelcomeScreen = () => {
   return (
     <div className="flex-1 flex items-center justify-center bg-gray-50">
       <div className="text-center p-8 bg-white rounded-lg shadow-sm max-w-md w-full mx-4">
-        <div className="w-16 h-16 rounded-full bg-blue-100 text-blue-500 flex items-center justify-center mx-auto mb-4">
+        <div className="w-16 h-16 rounded-full bg-blue-100 text-indigo-600 flex items-center justify-center mx-auto mb-4">
           <svg
             className="w-8 h-8"
             fill="none"

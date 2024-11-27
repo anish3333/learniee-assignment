@@ -53,9 +53,7 @@ const ChatPage = () => {
   const fetchRecentChats = async () => {
     try {
       const res = await fetch(
-        `${import.meta.env.VITE_PROXY_URL}/proxy?url=${encodeURIComponent(
-          `${import.meta.env.VITE_SERVER_URL}/api/messages/recent-chats`
-        )}`,
+        `${import.meta.env.VITE_SERVER_URL}/api/messages/recent-chats`,
         {
           credentials: "include",
         }
@@ -78,18 +76,14 @@ const ChatPage = () => {
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages]);
+  }, [messages, isTyping]);
 
   const searchUser = async () => {
     if (!searchUsername.trim()) return;
 
     try {
       const res = await fetch(
-        `${import.meta.env.VITE_PROXY_URL}/proxy?url=${encodeURIComponent(
-          `${
-            import.meta.env.VITE_SERVER_URL
-          }/api/auth/search?username=${searchUsername}`
-        )}`,
+        `${import.meta.env.VITE_SERVER_URL}/api/auth/search?username=${searchUsername}`,
         { credentials: "include" }
       );
       const data = await res.json();
@@ -97,9 +91,7 @@ const ChatPage = () => {
       console.log(data.user);
       if (data.user._id) {
         const historyRes = await fetch(
-          `${import.meta.env.VITE_PROXY_URL}/proxy?url=${encodeURIComponent(
-            `${import.meta.env.VITE_SERVER_URL}/api/messages/m/${data.user._id}`
-          )}`,
+          `${import.meta.env.VITE_SERVER_URL}/api/messages/m/${data.user._id}`,
           { credentials: "include" }
         );
         const messages = await historyRes.json();
@@ -144,9 +136,7 @@ const ChatPage = () => {
       setInputMessage("");
 
       const res = await fetch(
-        `${import.meta.env.VITE_PROXY_URL}/proxy?url=${encodeURIComponent(
-          `${import.meta.env.VITE_SERVER_URL}/api/messages`
-        )}`,
+        `${import.meta.env.VITE_SERVER_URL}/api/messages`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -174,9 +164,7 @@ const ChatPage = () => {
     console.log(user);
     if (user._id) {
       const historyRes = await fetch(
-        `${import.meta.env.VITE_PROXY_URL}/proxy?url=${encodeURIComponent(
-          `${import.meta.env.VITE_SERVER_URL}/api/messages/m/${user._id}`
-        )}`,
+        `${import.meta.env.VITE_SERVER_URL}/api/messages/m/${user._id}`,
         { credentials: "include" }
       );
       const messages = await historyRes.json();

@@ -13,11 +13,11 @@ export const InputArea = ({ inputMessage, setInputMessage, sendMessage, handleTy
           }}
           onKeyPress={(e) => e.key === "Enter" && sendMessage()}
           placeholder="Type your message..."
-          className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+          className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-600 focus:ring-1 focus:ring-indigo-600"
         />
         <button
           onClick={sendMessage}
-          className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+          className="px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-blue-600"
         >
           Send
         </button>
