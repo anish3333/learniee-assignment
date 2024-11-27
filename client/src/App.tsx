@@ -4,9 +4,13 @@ import { ProtectedRoute } from './components/ProtectedRoute';
 import { Login } from './pages/Login';
 import { Signup } from './pages/Signup';
 import { Home } from './pages/Home';
+import { Toaster } from 'sonner';
 
 function App() {
   return (
+    <>
+    <Toaster position="top-center" richColors />
+    
     <AuthProvider>
       <Router>
         <Routes>
@@ -23,6 +27,7 @@ function App() {
         </Routes>
       </Router>
     </AuthProvider>
+    </>
   );
 }
 

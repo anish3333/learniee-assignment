@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { AuthContextType, User } from "../types/auth";
 import axios from "axios";
+import { toast } from "sonner";
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
@@ -12,21 +13,28 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const [loading, setLoading] = useState<boolean>(true);
 
   const login = async (email: string, password: string) => {
-    const response = await axios.post(
-      `${import.meta.env.VITE_SERVER_URL}/api/auth/login`,
-      { email, password },
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        withCredentials: true,
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_SERVER_URL}/api/auth/login`,
+        { email, password },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      );
+      if (response.status === 200) {
+        setUser(response.data.user);
+        setIsAuthenticated(true);
+        toast.success("Successfully logged in!");
+        return response.data.user;
       }
-    );
-    if (response.status === 200) {
-      setUser(response.data.user);
-      setIsAuthenticated(true);
+    } catch (error: any) {
+      const errorMessage = error.response?.data?.error || "Failed to login";
+      toast.error(errorMessage);
+      throw error;
     }
-    return response.data.user;
   };
 
   const signup = async (username: string, email: string, password: string) => {
@@ -43,13 +51,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         }
       );
 
-      if (response.status === 200) {
+      if (response.status === 201) {
         setUser(response.data.user);
         setIsAuthenticated(true);
+        toast.success("Account created successfully!");
       }
-    } catch (error) {
-      console.error("Signup failed:", error);
-      throw error; // Rethrow the error for the calling function to handle.
+    } catch (error: any) {
+      // console.log(error.response.data.error);
+      const errorMessage = error.response?.data?.error || "Failed to create account";
+      toast.error(errorMessage);
+      throw error;
     } finally {
       setLoading(false);
     }
@@ -57,17 +68,27 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const logout = async () => {
     setLoading(true);
-    const response = await axios.get(
-      `${import.meta.env.VITE_SERVER_URL}/api/auth/logout`,
-      {
-        withCredentials: true,
-      }
-    );
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_SERVER_URL}/api/auth/logout`,
+        {
+          withCredentials: true,
+        }
+      );
 
-    if (response.status === 200) setUser(null);
-    else console.log("Logout failed");
-    setIsAuthenticated(false);
-    setLoading(false);
+      if (response.status === 200) {
+        setUser(null);
+        setIsAuthenticated(false);
+        toast.success("Successfully logged out");
+      } else {
+        toast.error("Failed to logout");
+      }
+    } catch (error: any) {
+      const errorMessage = error.response?.data?.message || "Failed to logout";
+      toast.error(errorMessage);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const verify = async () => {
@@ -78,15 +99,20 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
           withCredentials: true,
         }
       );
-      console.log(response);
       if (response.status === 200 && response.data.user) {
         setUser(response.data.user);
         setIsAuthenticated(true);
+        toast.success("Session restored", {
+          duration: 2000,
+        });
       }
-    } catch (error) {
-      console.error("Verification failed:", error);
+    } catch (error: any) {
+      const errorMessage = error.response?.data?.message || "Session verification failed";
+      toast.error(errorMessage, {
+        duration: 2000,
+      });
     } finally {
-      setLoading(false); // Set loading to false after verification
+      setLoading(false);
     }
   };
 

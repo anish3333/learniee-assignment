@@ -1,4 +1,36 @@
-# YackStack - MERN+SOCKE.IO Chat Application
+# YackStack - MERN+SOCKE.IO Full Stack Chat Application
+
+
+This project is a **real-time chat application** built using the MERN Stack (MongoDB, Express, React, and Node.js). It features real-time messaging, user authentication, online/offline status indicators, and basic chat UI.  
+
+---
+
+## Features  
+
+### 1. User Authentication  
+- **JWT-based Authentication** for session management.  
+- User registration and login with password hashing and validation.  
+
+### 2. Chat Functionality  
+- Real-time messaging using **WebSockets** via Socket.io.  
+- Chat history storage in **MongoDB**, accessible on login.  
+
+### 3. User Interface  
+- Simple React-based chat UI for sending and receiving messages.  
+- Online users list showing connection status.  
+- Chat window with auto-scroll for new messages and timestamps for each message.  
+
+### 4. Online Presence Indicator  
+- Real-time updates for user online/offline status using WebSocket events.  
+
+---
+
+## Bonus Features (Optional but Implemented)  
+- **Typing Indicator**: Shows "typing..." when the other user is typing. 
+---
+
+## Local Setup Instructions  
+
 
 This repository contains two main folders:  
 - **client**: A React-based frontend built with Vite and TypeScript.  
@@ -97,4 +129,4 @@ The frontend is hosted on Render at:
 - Make sure the frontend `VITE_SERVER_URL` matches the hosted backend URL.  
 - For production, ensure sensitive environment variables are stored securely.  
 
-Feel free to contribute and open issues for any bugs or enhancements.
+

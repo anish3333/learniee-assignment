@@ -6,17 +6,13 @@ import { UserPlus } from 'lucide-react';
 import { AuthFormData } from '../types/auth';
 
 export const Signup: React.FC = () => {
-  const { isAuthenticated, signup } = useAuth();
+  const { signup } = useAuth();
   const navigate = useNavigate();
 
   const handleSignup = async (data: AuthFormData) => {
     try {
       await signup(data.username, data.email, data.password);
-      
-      // Wait for `isAuthenticated` to update before navigating
-      if (isAuthenticated) {
-        navigate('/');
-      }
+      navigate("/")
     } catch (error) {
       console.error("Signup failed:", error);
     }
